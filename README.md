@@ -80,4 +80,3 @@ Feel free to fork this repo, clone it, or contribute if you’re learning too!
 This project is licensed under the **MIT License** — use it freely for learning or building your own documentation.
 
 ---
-بنظرت این سرفصل ها برای یادگیری ۱۰ روزه کافی هستن؟ 
