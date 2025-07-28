@@ -202,8 +202,6 @@ Cassandra has **tunable consistency**.
 
 ---
 
----
-
 ## 📝 Hinted Handoff
 
 When a replica is **down**, Cassandra can **store a hint** on another node to replay later.
@@ -297,6 +295,30 @@ The **Snitch** tells Cassandra about network topology:
 - Uses **timestamps** to determine the newest data.  
 - Runs probabilistically (default 10% of reads) to avoid overhead.  
 - Runs asynchronously so it doesn't block client queries.
+
+### Example
+
+Assume a replication factor (RF) of 3 with nodes: **Node A**, **Node B**, and **Node C**.
+
+1. An update happens:
+   - Data for key `user123` is successfully written to Node A and Node B.
+   - Node C misses the update (e.g., it was down).
+
+2. A client performs a read request with consistency level **QUORUM**:
+   - The coordinator requests full data from Node A (fastest node).
+   - It requests digests (checksums) from Node B and Node C.
+
+3. The coordinator detects inconsistency:
+   - Node C's digest does not match Node A and B’s digest because Node C has stale data.
+
+4. Read Repair runs:
+   - The coordinator fetches the latest data from Node A or Node B.
+   - It sends the updated data to Node C to repair the inconsistency.
+   - The client receives the most recent data.
+
+### Notes
+- Read Repair only happens probabilistically (e.g., 10% of reads) to avoid performance overhead.
+- It runs asynchronously, so it doesn’t block the client.
 
 ---
 
@@ -398,3 +420,4 @@ The **Snitch** tells Cassandra about network topology:
 
 ---
 
+        

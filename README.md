@@ -1,3 +1,7 @@
+اگر می‌خواهید نسخه فارسی این مستندات را بخوانید، لطفاً روی [READMEfa.md](./READMEfa.md) کلیک کنید.
+
+---
+
 # 📚 Apache Cassandra – Learning in 10 Days
 
 This repository contains structured notes and hands-on guides from my journey of learning **Apache Cassandra** in **10 days** — a high-performance, distributed NoSQL database designed for scalability, availability, and reliability without compromising performance.
