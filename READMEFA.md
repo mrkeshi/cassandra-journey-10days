@@ -14,7 +14,7 @@
 | روز | عنوان | لینک |
 |-----|-------|------|
 | ۰۱ | مقدمه‌ای بر کاساندرا | [📄 day01-introduction.md](./docs/fa/day01-introduction.md) |
-| ۰۲ | نصب کاساندرا | [📄 day02-installation.md](./docs/fa/day02-installation.rtl.md) |
+| ۰۲ | نصب کاساندرا | [📄 day02-installation.md](./docs/fa/day02-installation.md) |
 | ۰۳ | شروع کار با CQL | [📄 day03-cql-basics.md](./docs/fa/day03-cql-basics.md) |
 | ۰۴ | اصول مدل‌سازی داده | [📄 day04-data-modeling.md](./docs/fa/day04-data-modeling.md) |
 | ۰۵ | استفاده از کالکشن‌ها (لیست، مجموعه، نقشه) | [📄 day05-collections.md](./docs/fa/day05-collections.md) |
