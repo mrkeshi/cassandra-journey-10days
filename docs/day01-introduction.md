@@ -161,7 +161,7 @@ Cassandra replicates data across multiple nodes.
 - **Replication Factor (RF):** Number of copies of each row.
 - **Replication Strategy:** How to choose replica nodes.
 
-### ➤ Example:
+**Example:**
 
 If `RF = 3` → data is stored on 3 different nodes.
 
@@ -194,7 +194,7 @@ Cassandra has **tunable consistency**.
 | LOCAL_QUORUM  | Quorum in same datacenter                           |
 | EACH_QUORUM   | Quorum in each datacenter                           |
 
-### ➤ Example (RF = 3, Consistency = QUORUM):
+**Example:** (RF = 3, Consistency = QUORUM):
 
 - 2 of 3 nodes must confirm
 - If 2 nodes respond → ✅ success
@@ -206,7 +206,7 @@ Cassandra has **tunable consistency**.
 
 When a replica is **down**, Cassandra can **store a hint** on another node to replay later.
 
-### ➤ Example (RF = 3, 1 node down, Consistency = QUORUM):
+**Example:** (RF = 3, 1 node down, Consistency = QUORUM):
 
 - Coordinator writes successfully to 2 available nodes ✅  
 - Stores a **hint** for the 3rd (down) node  
@@ -234,7 +234,7 @@ When a replica is **down**, Cassandra can **store a hint** on another node to re
 
 Consistency levels for **read** queries specify how many replicas must respond before returning data.
 
-### ➤ Example:
+**Example:**:
 
 If you have `RF = 3` and use consistency `QUORUM` for reads:
 
@@ -255,13 +255,13 @@ where:
 - **W** = number of nodes that acknowledge a write  
 - **RF** = replication factor
 
-### ➤ Example 1: Strong consistency with RF=3
+**Example:** 1: Strong consistency with RF=3
 
 - Write consistency = QUORUM (W = 2)  
 - Read consistency = QUORUM (R = 2)  
 - Since 2 + 2 > 3 → reads always reflect latest writes.
 
-### ➤ Example 2: Weak consistency scenario
+**Example:** 2: Weak consistency scenario
 
 - Write consistency = ONE (W = 1)  
 - Read consistency = ONE (R = 1)  
