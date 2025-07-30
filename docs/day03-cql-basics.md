@@ -145,7 +145,7 @@ SELECT "Name" FROM "USERS";
 SELECT name FROM users;
 SELECT "name" FROM "USERS";
 SELECT "Name" FROM users;
-
+```
 ---
 
 
@@ -224,7 +224,7 @@ May return:
 
 ---
 
-### ✅ Summary
+### ✅ Notes
 
 - `INSERT INTO` is used to add new rows to a table.
 - You can insert full or partial rows.
