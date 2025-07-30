@@ -81,7 +81,7 @@ Feel free to fork this repo, clone it, or contribute if you’re learning too!
 
 ## ✅ Suggested Contribution Areas
 
--✨ **Add New Examples**  
+ ✨ **Add New Examples**  
   Contribute advanced examples for CQL commands, realistic table schemas, and complex query patterns.
 
  📝 **Improve Documentation**  
