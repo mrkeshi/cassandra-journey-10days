@@ -79,8 +79,27 @@ Feel free to fork this repo, clone it, or contribute if you’re learning too!
 
 ---
 
-## 📜 License
+## ✅ Suggested Contribution Areas
 
-This project is licensed under the **MIT License** — use it freely for learning or building your own documentation.
+- ✨ **Add New Examples**  
+  Contribute advanced examples for CQL commands, realistic table schemas, and complex query patterns.
+
+- 📝 **Improve Documentation**  
+  Help improve the Persian and English documentation by fixing typos, expanding explanations, and writing step-by-step guides.
+
+- 🧪 **Write Tests for Examples**  
+  Provide test data, `.cql` scripts, and validation scenarios to ensure query accuracy and clarity.
+
+- 📐 **Create Data Modeling Guides**  
+  Document best practices for data modeling in Cassandra with a focus on partition design and performance.
+
+- 🛠️ **Add Tools and Scripts**  
+  Add useful development utilities such as Docker Compose files, seed data scripts, and automation helpers.
+
+- 💻 **Multi-language Code Examples**  
+  Implement examples that connect to Cassandra using languages like Python, Java, Node.js, and more.
+
+- 🌐 **Add Localized Languages**  
+  Translate the entire tutorial into other languages to make it more accessible for learners around the world.
 
 ---
