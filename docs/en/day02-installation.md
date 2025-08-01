@@ -1,5 +1,5 @@
 
-# Installing Apache Cassandra on Linux and Windows
+# Day 02 - Installing Apache Cassandra on Linux and Windows
 
 This guide provides complete step-by-step instructions to install Apache Cassandra on **Linux (Debian/Ubuntu and CentOS/RHEL)** and **Windows** using WSL or Docker.
 
