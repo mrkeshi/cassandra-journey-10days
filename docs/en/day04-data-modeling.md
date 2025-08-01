@@ -1,8 +1,8 @@
 # Day 04 - Cassandra Data Modeling Guide — Step-by-Step with Practical Examples 🛠️
-
 ![Cassandra Logo](https://img.shields.io/badge/Apache%20Cassandra-1287B1?style=flat&logo=apache-cassandra&logoColor=white) 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![GitHub stars](https://img.shields.io/github/stars/your-username/your-repo?style=social)](https://github.com/your-username/your-repo)
+[![GitHub stars](https://img.shields.io/github/stars/mrkeshi/cassandra-journey-10days?style=social)](https://github.com/mrkeshi/cassandra-journey-10days)
+
 
 Welcome to **Day 4** of our Apache Cassandra learning journey! 🎉 In this guide, we dive deep into **data modeling**, a critical skill for building efficient, scalable applications with Cassandra. This is the fourth part of a four-day series:
 
