@@ -1,4 +1,4 @@
-# 🚀 Getting Started with Apache Cassandra – Basics & Architecture
+# DAY 01 - 🚀 Getting Started with Apache Cassandra – Basics & Architecture
 
 Welcome! This is a beginner-friendly guide to understanding **Apache Cassandra** — a powerful, distributed NoSQL database designed for handling massive amounts of data with high availability and scalability.
 
