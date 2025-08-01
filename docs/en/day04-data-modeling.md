@@ -412,8 +412,4 @@ WHERE month = '2025-08';
 3. **Order Status Updates** 📦
    - Query: Track order status changes by order ID.
    - Hint: Use `order_id` as partition key, `update_time` as clustering column.
-
 ---
-
-✨ **Happy Data Modeling!** ✨  
-Questions? Open an issue or join [GitHub Discussions](https://github.com/mrkeshi/cassandra-journey-10days/discussions).

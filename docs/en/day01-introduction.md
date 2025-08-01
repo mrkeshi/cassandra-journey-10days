@@ -1,4 +1,7 @@
 # DAY 01 - 🚀 Getting Started with Apache Cassandra – Basics & Architecture
+![Cassandra Logo](https://img.shields.io/badge/Apache%20Cassandra-1287B1?style=flat&logo=apache-cassandra&logoColor=white) 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![GitHub stars](https://img.shields.io/github/stars/mrkeshi/cassandra-journey-10days?style=social)](https://github.com/mrkeshi/cassandra-journey-10days)
 
 Welcome! This is a beginner-friendly guide to understanding **Apache Cassandra** — a powerful, distributed NoSQL database designed for handling massive amounts of data with high availability and scalability.
 

@@ -1,5 +1,8 @@
 
 # Day 02 - Installing Apache Cassandra on Linux and Windows
+![Cassandra Logo](https://img.shields.io/badge/Apache%20Cassandra-1287B1?style=flat&logo=apache-cassandra&logoColor=white) 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![GitHub stars](https://img.shields.io/github/stars/mrkeshi/cassandra-journey-10days?style=social)](https://github.com/mrkeshi/cassandra-journey-10days)
 
 This guide provides complete step-by-step instructions to install Apache Cassandra on **Linux (Debian/Ubuntu and CentOS/RHEL)** and **Windows** using WSL or Docker.
 

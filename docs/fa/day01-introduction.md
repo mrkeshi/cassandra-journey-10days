@@ -1,5 +1,8 @@
 
 # 🚀 شروع کار با آپاچی کاساندرا – مبانی و معماری
+![Cassandra Logo](https://img.shields.io/badge/Apache%20Cassandra-1287B1?style=flat&logo=apache-cassandra&logoColor=white) 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![GitHub stars](https://img.shields.io/github/stars/mrkeshi/cassandra-journey-10days?style=social)](https://github.com/mrkeshi/cassandra-journey-10days)
 
 خوش آمدید! این راهنمای مقدماتی به شما کمک می‌کند تا با **آپاچی کاساندرا** آشنا شوید — یک دیتابیس NoSQL توزیع‌شده و قدرتمند که برای مدیریت حجم بسیار زیادی از داده‌ها با قابلیت دسترسی بالا و مقیاس‌پذیری طراحی شده است.
 اگر تا به حال تعجب کرده‌اید که پلتفرم‌هایی مثل **Netflix**، **Reddit** یا **Instagram** چطور داده‌های عظیم‌شان را بدون قطعی مدیریت می‌کنند، کاساندرا یکی از پاسخ‌هاست.
