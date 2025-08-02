@@ -1,4 +1,4 @@
-# Day 04 - Cassandra Data Modeling Guide — Step-by-Step with Practical Examples 🛠️
+# Day 04 - Cassandra Data Modeling Guide — Step-by-Step with Practical Examples 
 ![Cassandra Logo](https://img.shields.io/badge/Apache%20Cassandra-1287B1?style=flat&logo=apache-cassandra&logoColor=white) 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![GitHub stars](https://img.shields.io/github/stars/mrkeshi/cassandra-journey-10days?style=social)](https://github.com/mrkeshi/cassandra-journey-10days)
@@ -6,10 +6,6 @@
 
 Welcome to **Day 4** of our Apache Cassandra learning journey! 🎉 In this guide, we dive deep into **data modeling**, a critical skill for building efficient, scalable applications with Cassandra. This is the fourth part of a four-day series:
 
-- **Day 1**: Introduction to Cassandra ([day01-introduction.md](day01-introduction.md)) 📄
-- **Day 2**: Installing Cassandra ([day02-installation.md](day02-installation.md)) 🖥️
-- **Day 3**: Getting Started with CQL ([day03-cql-basics.md](day03-cql-basics.md)) 💻
-- **Day 4**: Data Modeling Basics (this guide) 📊
 
 By now, you’ve learned Cassandra’s basics, set up a cluster, and explored CQL. Today, we’ll master **query-driven data modeling**, creating tables that power fast, scalable applications. Let’s make data modeling fun and practical with real-world examples! 🚀
 

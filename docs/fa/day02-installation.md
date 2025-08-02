@@ -1,5 +1,5 @@
 
-# روز - 02: نصب Apache Cassandra روی لینوکس و ویندوز
+# روز 02 - نصب Apache Cassandra روی لینوکس و ویندوز
 ![Cassandra Logo](https://img.shields.io/badge/Apache%20Cassandra-1287B1?style=flat&logo=apache-cassandra&logoColor=white) 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![GitHub stars](https://img.shields.io/github/stars/mrkeshi/cassandra-journey-10days?style=social)](https://github.com/mrkeshi/cassandra-journey-10days)
