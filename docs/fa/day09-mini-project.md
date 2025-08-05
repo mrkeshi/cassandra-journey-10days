@@ -1,49 +1,49 @@
-# Day 09 - Mini Project: Building a Simple Library App with Apache Cassandra
+# روز نهم - مینی پروژه: ساخت اپلیکیشن کتابخانه ساده با آپاچی کاساندرا
 
 ![Cassandra Logo](https://img.shields.io/badge/Apache%20Cassandra-1287B1?style=flat&logo=apache-cassandra&logoColor=white)
 
-Welcome to **Day 9** of our Apache Cassandra learning journey! 🎉 Today, we embark on a **practical mini-project** to build a simple backend application for managing a digital library using Cassandra and CQL. This project follows a **Query-Driven** approach and leverages advanced CQL features like collections (SET, LIST, MAP), TTL, and secondary indexes. The goal is to apply your knowledge in a real-world scenario and prepare for future extensions like adding an API or UI. 🚀
+به **روز نهم** از سفر یادگیری آپاچی کاساندرا خوش آمدید! 🎉 امروز یک **مینی پروژه عملی** را انجام می‌دهیم که در آن یک اپلیکیشن بک‌اند ساده برای مدیریت یک کتابخانه دیجیتال طراحی و پیاده‌سازی می‌کنیم. این پروژه با استفاده از رویکرد **Query-Driven** و ویژگی‌های پیشرفته CQL مانند مجموعه‌ها (SET, LIST, MAP)، TTL، و ایندکس‌های ثانویه ساخته می‌شود. هدف این است که شما بتوانید دانش خود را در یک سناریوی واقعی به کار ببرید و برای توسعه API یا رابط کاربری در آینده آماده شوید. 🚀
 
-In this guide, we will:
+در این راهنما، ما:
 
-- Design tables based on query requirements 📝
-- Use SET, LIST, and MAP collections for complex data modeling 📚
-- Implement TTL for automatic deletion of expired data 🕒
-- Create secondary indexes for efficient searching 🔍
-- Explore practical queries and data analysis 📊
-- Provide exercises to solidify your skills 💪
-
----
-
-## 🎯 Project Goal
-
-Build a simple backend application for managing a digital library, focusing on Cassandra’s query-driven design principles and advanced CQL features. This project will help you:
-
-- Design tables tailored to application queries.
-- Utilize collections and TTL for efficient data management.
-- Implement secondary indexes for enhanced search capabilities.
-- Prepare for scalability and future enhancements.
-
-## 📖 Project Scenario
-
-Imagine a digital library with the following features:
-
-- **User Registration**: Store user details including name, email, registration date, and preferences (as a MAP).
-- **Book Catalog**: Store book details including title, author, categories (SET), publication year, and availability status.
-- **Borrowing**: Allow users to borrow multiple books and track borrowing history.
-- **History**: Maintain borrowing history for users and books.
-- **Reporting**: Generate reports on active books, unreturned books, and active users.
-- **Automation**: Automatically delete expired data (e.g., old borrowing records) using TTL.
+- جداول را بر اساس نیازهای کوئری طراحی می‌کنیم 📝
+- از مجموعه‌های SET، LIST، و MAP برای مدل‌سازی داده‌های پیچیده استفاده می‌کنیم 📚
+- از TTL برای حذف خودکار داده‌های منقضی‌شده بهره می‌بریم 🕒
+- ایندکس‌های ثانویه را برای جستجوی سریع‌تر پیاده‌سازی می‌کنیم 🔍
+- کوئری‌های کاربردی و تحلیل داده‌ها را بررسی می‌کنیم 📊
+- تمرین‌هایی برای تسلط بیشتر ارائه می‌دهیم 💪
 
 ---
 
-## 🧱 Step 1: Database Design (Query-Driven)
+## 🎯 هدف پروژه
 
-In Cassandra, tables are designed based on the queries the application will run, not traditional normalization. Below are the tables designed to meet the project’s query requirements.
+ساخت یک اپلیکیشن بک‌اند ساده برای مدیریت یک کتابخانه دیجیتال با تمرکز بر اصول طراحی داده در کاساندرا و استفاده از ویژگی‌های پیشرفته CQL. این پروژه به شما کمک می‌کند تا:
 
-### 🗃️ Table 1: users – User Registration
+- جداول را بر اساس نیازهای کوئری طراحی کنید.
+- از مجموعه‌های داده‌ای و TTL برای مدیریت کارآمد داده‌ها استفاده کنید.
+- ایندکس‌های ثانویه را برای بهبود جستجو پیاده‌سازی کنید.
+- برای مقیاس‌پذیری و توسعه‌های آینده آماده شوید.
 
-This table stores user information, using a MAP to store preferences for book categories.
+## 📖 سناریو پروژه
+
+فرض کنید یک کتابخانه دیجیتال داریم که ویژگی‌های زیر را ارائه می‌دهد:
+
+- **ثبت کاربر**: ذخیره اطلاعات کاربران شامل نام، ایمیل، تاریخ ثبت‌نام، و علاقه‌مندی‌ها (به‌صورت MAP).
+- **ثبت کتاب**: ذخیره اطلاعات کتاب‌ها شامل عنوان، نویسنده، دسته‌بندی‌ها (SET)، سال انتشار، و وضعیت موجودی.
+- **امانت‌گیری**: امکان امانت گرفتن چند کتاب توسط هر کاربر و ثبت تاریخچه امانت‌ها.
+- **تاریخچه**: نگهداری تاریخچه امانت‌ها برای هر کاربر و هر کتاب.
+- **گزارش‌گیری**: گزارش تعداد کتاب‌های فعال، کتاب‌های بازنگشته، و کاربران فعال.
+- **خودکارسازی**: حذف خودکار داده‌های قدیمی (مثل امانت‌های قدیمی) با استفاده از TTL.
+
+---
+
+## 🧱 گام ۱: طراحی دیتابیس (Query-Driven)
+
+در کاساندرا، جداول بر اساس کوئری‌هایی که اپلیکیشن اجرا خواهد کرد طراحی می‌شوند، نه صرفاً بر اساس نرمال‌سازی سنتی. در ادامه، جداول موردنیاز را برای پاسخگویی به کوئری‌های پروژه طراحی می‌کنیم.
+
+### 🗃️ جدول ۱: users – ثبت کاربران
+
+این جدول اطلاعات کاربران را ذخیره می‌کند، با استفاده از MAP برای ذخیره علاقه‌مندی‌ها به دسته‌بندی‌های کتاب.
 
 ```sql
 CREATE TABLE library.users (
@@ -51,13 +51,13 @@ CREATE TABLE library.users (
     name TEXT,
     email TEXT,
     registration_date TIMESTAMP,
-    preferences MAP<TEXT, INT>  -- Preferences for categories with scores
+    preferences MAP<TEXT, INT>  -- علاقه‌مندی‌ها به دسته‌بندی‌ها با امتیاز
 );
 ```
 
-### 📚 Table 2: books – Book Catalog
+### 📚 جدول ۲: books – ثبت کتاب‌ها
 
-This table stores book information, using a SET for categories.
+این جدول اطلاعات کتاب‌ها را ذخیره می‌کند، با استفاده از SET برای دسته‌بندی‌ها.
 
 ```sql
 CREATE TABLE library.books (
@@ -70,9 +70,9 @@ CREATE TABLE library.books (
 );
 ```
 
-### 📦 Table 3: borrows_by_user – User Borrowing History
+### 📦 جدول ۳: borrows_by_user – امانت‌های هر کاربر
 
-This table tracks each user’s borrowing history, using TTL to automatically delete records after 30 days.
+این جدول تاریخچه امانت‌های هر کاربر را ذخیره می‌کند و از TTL برای حذف خودکار رکوردها پس از ۳۰ روز استفاده می‌کند.
 
 ```sql
 CREATE TABLE library.borrows_by_user (
@@ -84,12 +84,12 @@ CREATE TABLE library.borrows_by_user (
     notes TEXT,
     PRIMARY KEY (user_id, borrow_id)
 ) WITH CLUSTERING ORDER BY (borrow_id DESC)
-  AND default_time_to_live = 2592000;  -- Auto-delete after 30 days
+  AND default_time_to_live = 2592000;  -- حذف خودکار پس از ۳۰ روز
 ```
 
-### 📦 Table 4: borrows_by_book – Book Borrowing History
+### 📦 جدول ۴: borrows_by_book – تاریخچه امانت هر کتاب
 
-This table tracks borrowing history from the perspective of books.
+این جدول تاریخچه امانت‌ها را از منظر کتاب‌ها ذخیره می‌کند.
 
 ```sql
 CREATE TABLE library.borrows_by_book (
@@ -103,9 +103,9 @@ CREATE TABLE library.borrows_by_book (
 ) WITH CLUSTERING ORDER BY (borrow_id DESC);
 ```
 
-### 🔍 Secondary Index: Search by Book Title
+### 🔍 ایندکس ثانویه: جستجو بر اساس عنوان کتاب
 
-To support searching books by title, we create a secondary index.
+برای پشتیبانی از جستجوی کتاب‌ها بر اساس عنوان، یک ایندکس ثانویه ایجاد می‌کنیم.
 
 ```sql
 CREATE INDEX books_title_idx ON library.books (title);
@@ -113,51 +113,51 @@ CREATE INDEX books_title_idx ON library.books (title);
 
 ---
 
-## 🧪 Step 2: Insert Initial Data
+## 🧪 گام ۲: درج داده‌های اولیه
 
-To test the system, we insert initial data for users and books.
+برای آزمایش سیستم، داده‌های اولیه برای کاربران و کتاب‌ها درج می‌کنیم.
 
-### ➕ Insert Users
+### ➕ درج کاربران
 
 ```sql
 INSERT INTO library.users (user_id, name, email, registration_date, preferences)
-VALUES (uuid(), 'Ali Rezaei', 'ali@example.com', toTimestamp(now()), {'Fantasy': 5, 'Science': 3});
+VALUES (uuid(), 'علی رضایی', 'ali@example.com', toTimestamp(now()), {'Fantasy': 5, 'Science': 3});
 
 INSERT INTO library.users (user_id, name, email, registration_date, preferences)
-VALUES (uuid(), 'Sara Ahmadi', 'sara@example.com', toTimestamp(now()), {'Classic': 4, 'History': 2});
+VALUES (uuid(), 'سارا احمدی', 'sara@example.com', toTimestamp(now()), {'Classic': 4, 'History': 2});
 ```
 
-### ➕ Insert Books
+### ➕ درج کتاب‌ها
 
 ```sql
 INSERT INTO library.books (book_id, title, author, categories, published_year, available)
-VALUES (uuid(), '1984', 'George Orwell', {'Dystopian', 'Classic'}, 1949, true);
+VALUES (uuid(), '1984', 'جورج اورول', {'دیستوپیایی', 'کلاسیک'}, 1949, true);
 
 INSERT INTO library.books (book_id, title, author, categories, published_year, available)
-VALUES (uuid(), 'The Hobbit', 'J.R.R. Tolkien', {'Fantasy'}, 1937, true);
+VALUES (uuid(), 'هابیت', 'جی.آر.آر. تالکین', {'فانتزی'}, 1937, true);
 
 INSERT INTO library.books (book_id, title, author, categories, published_year, available)
-VALUES (uuid(), 'Sapiens', 'Yuval Noah Harari', {'History', 'Non-fiction'}, 2011, true);
+VALUES (uuid(), 'انسان خردمند', 'یووال نوح هراری', {'تاریخ', 'غیرداستانی'}, 2011, true);
 ```
 
 ---
 
-## 📥 Step 3: Record a Book Borrowing
+## 📥 گام ۳: ثبت امانت کتاب
 
-To record a borrowing, we need to update both `borrows_by_user` and `borrows_by_book` tables and update the book’s availability status.
+برای ثبت امانت، باید اطلاعات را در هر دو جدول `borrows_by_user` و `borrows_by_book` ذخیره کنیم و وضعیت موجودی کتاب را به‌روزرسانی کنیم.
 
-### ⛏️ Steps:
+### ⛏️ مراحل:
 
-1. Obtain `user_id` and `book_id`.
-2. Generate `borrow_id` using `now()` (TIMEUUID type).
-3. Insert into `borrows_by_user`.
-4. Insert into `borrows_by_book`.
-5. Update the book’s availability in the `books` table.
+1. دریافت `user_id` و `book_id`.
+2. تولید `borrow_id` با استفاده از `now()` (نوع TIMEUUID).
+3. ثبت در `borrows_by_user`.
+4. ثبت در `borrows_by_book`.
+5. به‌روزرسانی وضعیت کتاب در جدول `books`.
 
-### ✅ Borrowing Operations:
+### ✅ عملیات ثبت امانت:
 
 ```sql
--- Insert into borrows_by_user
+-- ثبت در borrows_by_user
 INSERT INTO library.borrows_by_user (user_id, borrow_id, book_id, borrow_date, return_date, notes)
 VALUES (
   <user_id>,
@@ -165,10 +165,10 @@ VALUES (
   <book_id>,
   toTimestamp(now()),
   null,
-  'First borrowing'
+  'اولین امانت'
 );
 
--- Insert into borrows_by_book
+-- ثبت در borrows_by_book
 INSERT INTO library.borrows_by_book (book_id, borrow_id, user_id, borrow_date, return_date, status)
 VALUES (
   <book_id>,
@@ -179,66 +179,66 @@ VALUES (
   'borrowed'
 );
 
--- Update book availability
+-- به‌روزرسانی وضعیت کتاب
 UPDATE library.books SET available = false WHERE book_id = <book_id>;
 ```
 
 ---
 
-## 📤 Step 4: Return a Book
+## 📤 گام ۴: بازگرداندن کتاب
 
-To record a book return, we update the borrowing tables and the book’s availability status.
+برای ثبت بازگشت کتاب، باید جداول امانت و وضعیت کتاب را به‌روزرسانی کنیم.
 
-### ✅ Return Operations:
+### ✅ عملیات بازگشت:
 
 ```sql
--- Update borrows_by_user
+-- به‌روزرسانی در borrows_by_user
 UPDATE library.borrows_by_user 
-SET return_date = toTimestamp(now()), notes = 'Book returned'
+SET return_date = toTimestamp(now()), notes = 'کتاب بازگشت داده شد'
 WHERE user_id = <user_id> AND borrow_id = <borrow_id>;
 
--- Update borrows_by_book
+-- به‌روزرسانی در borrows_by_book
 UPDATE library.borrows_by_book 
 SET return_date = toTimestamp(now()), status = 'returned'
 WHERE book_id = <book_id> AND borrow_id = <borrow_id>;
 
--- Update book availability
+-- به‌روزرسانی موجودی کتاب
 UPDATE library.books SET available = true WHERE book_id = <book_id>;
 ```
 
 ---
 
-## 🔍 Step 5: Useful Queries
+## 🔍 گام ۵: کوئری‌های کاربردی
 
-These queries are used to extract information and generate reports from the data.
+این کوئری‌ها برای استخراج اطلاعات و گزارش‌گیری از داده‌ها استفاده می‌شوند.
 
-### 🟢 1. List Available Books
+### 🟢 ۱. لیست کتاب‌های در دسترس
 
 ```sql
 SELECT * FROM library.books WHERE available = true ALLOW FILTERING;
 ```
 
-> **Warning**: Using `ALLOW FILTERING` can reduce performance. For frequently used queries, consider using an index or a separate table.
+> **هشدار**: استفاده از `ALLOW FILTERING` می‌تواند عملکرد را کاهش دهد. برای کوئری‌های پرتکرار، بهتر است از ایندکس یا جدول جداگانه استفاده کنید.
 
-### 🔎 2. Search Books by Title
+### 🔎 ۲. جستجوی کتاب بر اساس عنوان
 
 ```sql
 SELECT * FROM library.books WHERE title = '1984';
 ```
 
-### 👤 3. View a User’s Borrowing History
+### 👤 ۳. مشاهده امانت‌های یک کاربر خاص
 
 ```sql
 SELECT * FROM library.borrows_by_user WHERE user_id = <user_id>;
 ```
 
-### 📚 4. View a Book’s Borrowing History
+### 📚 ۴. مشاهده تاریخچه امانت یک کتاب
 
 ```sql
 SELECT * FROM library.borrows_by_book WHERE book_id = <book_id>;
 ```
 
-### 📊 5. Report Books Borrowed in the Last 7 Days
+### 📊 ۵. گزارش کتاب‌های امانت‌گرفته‌شده در ۷ روز گذشته
 
 ```sql
 SELECT * FROM library.borrows_by_book 
@@ -249,87 +249,87 @@ ALLOW FILTERING;
 
 ---
 
-## 🔄 Step 6: Automatic Cleanup with TTL
+## 🔄 گام ۶: پاک‌سازی خودکار با TTL
 
-Using `default_time_to_live = 2592000` (30 days) in the `borrows_by_user` table ensures borrowing records are automatically deleted after 30 days.
+استفاده از `default_time_to_live = 2592000` (۳۰ روز) در جدول `borrows_by_user` باعث می‌شود رکوردهای امانت پس از ۳۰ روز به‌صورت خودکار حذف شوند.
 
-### Benefits:
+### مزایا:
 
-- **Keep Tables Lightweight**: Reduces storage of old data.
-- **Automated Management**: No need for scripts to delete old records.
-- **Efficient Resource Use**: Optimizes database memory usage.
+- **سبک ماندن جداول**: کاهش حجم داده‌های قدیمی.
+- **مدیریت خودکار**: نیازی به اسکریپت‌های اضافی برای حذف داده‌ها نیست.
+- **بهینه‌سازی حافظه**: استفاده کارآمد از منابع دیتابیس.
 
 ---
 
-## 📝 Exercises for Mastery
+## 📝 تمرین‌ها برای تسلط کامل
 
-To strengthen your skills, complete these exercises:
+برای تقویت مهارت‌های خود، این تمرین‌ها را انجام دهید:
 
-### ✅ Exercise 1: Insert Data
+### ✅ تمرین ۱: درج داده
 
-Insert data for 5 different users and at least 10 books. Use varied categories in the SET and different scores in the MAP for preferences.
+برای ۵ کاربر مختلف و حداقل ۱۰ کتاب داده درج کنید. از دسته‌بندی‌های متنوع در SET و امتیازهای مختلف در MAP استفاده کنید.
 
-### ✅ Exercise 2: Record Borrowings
+### ✅ تمرین ۲: ثبت امانت
 
-Have each user borrow at least 2 books. Ensure the book categories align with user preferences.
+برای هر کاربر حداقل ۲ کتاب امانت ثبت کنید. مطمئن شوید که دسته‌بندی‌های کتاب‌ها با علاقه‌مندی‌های کاربران همخوانی دارد.
 
-### ✅ Exercise 3: Search by Preferences
+### ✅ تمرین ۳: جستجوی علاقه‌مندی‌ها
 
-Write a query to find users interested in the "Fantasy" category. (Hint: Use `CONTAINS KEY` for the MAP in the `users` table.)
+کوئری‌ای بنویسید که کاربران علاقه‌مند به دسته‌بندی "Fantasy" را پیدا کند. (نکته: از `CONTAINS KEY` برای MAP در جدول `users` استفاده کنید.)
 
 ```sql
 SELECT * FROM library.users WHERE preferences CONTAINS KEY 'Fantasy';
 ```
 
-### ✅ Exercise 4: Report Recent Borrowings
+### ✅ تمرین ۴: گزارش امانت‌های اخیر
 
-Write a query to return all books borrowed in the last 7 days. (Example provided above.)
+کوئری‌ای بنویسید که تمام کتاب‌هایی که در ۷ روز گذشته امانت گرفته شده‌اند را برگرداند. (مثال در بالا ارائه شده است.)
 
-### ✅ Exercise 5: Python Script for Availability Check
+### ✅ تمرین ۵: اسکریپت پایتون برای بررسی موجودی
 
-Write a Python script to check book availability and display a warning if no copies are available.
+یک اسکریپت پایتونی بنویسید که موجودی کتاب‌ها را بررسی کند و اگر هیچ نسخه‌ای در دسترس نباشد، هشداری نمایش دهد.
 
-#### Sample Python Script:
+#### مثال اسکریپت پایتون:
 
 ```python
 from cassandra.cluster import Cluster
 from cassandra.auth import PlainTextAuthProvider
 
-# Connect to Cassandra
+# تنظیمات اتصال به کاساندرا
 auth_provider = PlainTextAuthProvider(username='cassandra', password='cassandra')
 cluster = Cluster(['127.0.0.1'], auth_provider=auth_provider)
 session = cluster.connect('library')
 
-# Check book availability
+# بررسی کتاب‌های در دسترس
 rows = session.execute("SELECT title, available FROM books")
 for row in rows:
     if not row.available:
-        print(f"Warning: Book '{row.title}' is not available!")
+        print(f"هشدار: کتاب '{row.title}' در دسترس نیست!")
 
-# Close connection
+# بستن اتصال
 cluster.shutdown()
 ```
 
 ---
 
-## 🛠️ Additional Tips and Best Practices
+## 🛠️ نکات اضافی و بهترین روش‌ها
 
-### Best Practices
+### بهترین روش‌ها
 
-- **Query-Driven Design** 📝: Always design tables based on application queries.
-- **Use Collections** 🗂️: Leverage SET, LIST, and MAP for modeling complex but related data.
-- **Manage TTL** 🕒: Use TTL for temporary data (e.g., borrowing records) to keep the cluster lightweight.
-- **Cautious Use of Secondary Indexes** 🔍: Use indexes only for low-cardinality columns.
-- **Test Queries** 🧪: Validate queries in a test environment before deploying to production.
+- **طراحی کوئری‌محور** 📝: همیشه جداول را بر اساس کوئری‌های اپلیکیشن طراحی کنید.
+- **استفاده از مجموعه‌ها** 🗂️: از SET، LIST، و MAP برای مدل‌سازی داده‌های پیچیده اما مرتبط استفاده کنید.
+- **مدیریت TTL** 🕒: برای داده‌های موقتی (مثل امانت‌ها) از TTL استفاده کنید تا خوشه سبک بماند.
+- **ایندکس‌های ثانویه با احتیاط** 🔍: ایندکس‌ها را فقط برای ستون‌های با کاردینالیتی پایین استفاده کنید.
+- **تست کوئری‌ها** 🧪: قبل از استفاده در محیط تولید، کوئری‌ها را در محیط آزمایشی آزمایش کنید.
 
-### Common Pitfalls
+### اشتباهات رایج
 
-- **Overusing ALLOW FILTERING** ⚠️: This can degrade performance. Redesign tables for frequently used queries.
-- **Ignoring TTL** 🚫: Not using TTL for temporary data can bloat the cluster.
-- **Misusing Secondary Indexes** 🚨: Avoid indexes on high-cardinality columns (e.g., email).
+- **استفاده بیش از حد از ALLOW FILTERING** ⚠️: این کار می‌تواند عملکرد را کاهش دهد. به جای آن، جداول را بازطراحی کنید.
+- **نادیده گرفتن TTL** 🚫: عدم استفاده از TTL برای داده‌های موقتی می‌تواند خوشه را سنگین کند.
+- **استفاده نادرست از ایندکس‌های ثانویه** 🚨: ایندکس‌ها برای ستون‌های با کاردینالیتی بالا (مثل ایمیل) مناسب نیستند.
 
 ---
 
-## 🚀 Conclusion
+## 🚀 نتیجه‌گیری
 
-In this mini-project, we built a simple backend application for managing a digital library using Apache Cassandra. By applying query-driven design, collections (SET, LIST, MAP), TTL, and secondary indexes, we created a scalable and efficient system. This project provides a strong foundation for adding an API or UI in the future. Complete the suggested exercises to reinforce your CQL and Cassandra skills! 💪
+در این مینی پروژه، یک اپلیکیشن بک‌اند ساده برای مدیریت کتابخانه دیجیتال با استفاده از آپاچی کاساندرا طراحی کردیم. با استفاده از طراحی کوئری‌محور، مجموعه‌های SET، LIST، و MAP، TTL، و ایندکس‌های ثانویه، توانستیم سیستمی مقیاس‌پذیر و کارآمد ایجاد کنیم. این پروژه پایه‌ای محکم برای اضافه کردن API یا رابط کاربری در آینده فراهم می‌کند. با انجام تمرین‌های پیشنهادی، مهارت‌های خود را در CQL و کاساندرا تقویت کنید! 💪
