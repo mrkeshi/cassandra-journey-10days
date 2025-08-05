@@ -1,70 +1,62 @@
-# Day 08 - Advanced CQL Features in Apache Cassandra
+# روز هشتم - ویژگی‌های پیشرفته CQL در آپاچی کاساندرا
 
-![Cassandra Logo](https://img.shields.io/badge/Apache%20Cassandra-1287B1?style=flat&logo=apache-cassandra&logoColor=white)
+![Cassandra Logo](https://img.shields.io/badge/Apache%20Cassandra-1287B1?style=flat&logo=apache-cassandra&logoColor=white)  
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)  
+[![GitHub stars](https://img.shields.io/github/stars/mrkeshi/cassandra-journey-10days?style=social)](https://github.com/mrkeshi/cassandra-journey-10days)
 
-Welcome to **Day 8** of our Apache Cassandra learning journey! 🎉 Today, we’re diving into **Advanced CQL Features** that empower you to build real-time, flexible, and fault-tolerant applications. These tools are powerful but require a deep understanding to avoid common pitfalls, such as misusing `BATCH` statements or over-relying on secondary indexes. By mastering these features, you’ll unlock Cassandra’s full potential for handling complex use cases with precision and efficiency. 🚀
+به **روز هشتم** از سفر یادگیری آپاچی کاساندرا خوش آمدید! 🎉 امروز به بررسی **ویژگی‌های پیشرفته CQL** می‌پردازیم که به شما امکان ساخت اپلیکیشن‌های بلادرنگ، منعطف و مقاوم در برابر خطا را می‌دهند. این ابزارها قدرتمند هستند، اما نیاز به درک عمیق دارند تا از اشتباهات رایج مانند استفاده نادرست از دستورات `BATCH` یا وابستگی بیش از حد به ایندکس‌های ثانویه جلوگیری شود. با تسلط بر این ویژگی‌ها، می‌توانید پتانسیل کامل کاساندرا را برای مدیریت موارد استفاده پیچیده با دقت و کارایی بالا آزاد کنید. 🚀
 
-In this guide, we’ll:
+در این راهنما، ما:  
+- ویژگی‌های پیشرفته CQL مانند دستورات `BATCH`، تراکنش‌های سبک (LWT)، نمای مادی‌شده، انواع داده تعریف‌شده توسط کاربر (UDT)، توابع تعریف‌شده توسط کاربر (UDF) و پشتیبانی از JSON را بررسی می‌کنیم 📝  
+- مثال‌های کاربردی متناسب با یک اپلیکیشن شبکه اجتماعی ارائه می‌دهیم 📱  
+- بهترین روش‌ها و اشتباهات رایج را که باید از آن‌ها اجتناب کنید، برجسته می‌کنیم ⚠️  
+- نکته‌ای اضافی درباره حذف ایمن جدول‌ها و کی‌اسپیس‌ها ارائه می‌دهیم 🛠️  
 
-- Explore advanced CQL features like `BATCH` statements, Lightweight Transactions (LWT), Materialized Views, User-Defined Types (UDTs), User-Defined Functions (UDFs), and JSON support 📝
-- Provide practical examples tailored to a social media application 📱
-- Highlight best practices and common mistakes to avoid ⚠️
-- Include a bonus tip on safely dropping tables and keyspaces 🛠️
+> **توجه**: فراموش کردم زودتر ذکر کنم، اما حذف جدول‌ها و کی‌اسپیس‌ها عملیاتی حساس است که نیاز به دقت دارد. برای حذف یک جدول، از دستور `DROP TABLE keyspace_name.table_name;` استفاده کنید. برای حذف یک کی‌اسپیس کامل، از `DROP KEYSPACE keyspace_name;` استفاده کنید. همیشه مطمئن شوید که از داده‌ها نسخه پشتیبان تهیه کرده‌اید یا مطمئن هستید که دیگر به آن‌ها نیاز ندارید، زیرا این عملیات غیرقابل بازگشت هستند!
 
-> **Note**: I forgot to mention earlier, but dropping tables and keyspaces is a critical operation that requires caution. To drop a table, use `DROP TABLE keyspace_name.table_name;`. To drop an entire keyspace, use `DROP KEYSPACE keyspace_name;`. Always ensure you have backups or are certain the data is no longer needed, as these operations are irreversible!
+## دستورات دسته‌ای (Batch Statements) – اجرای چند دستور با هم
 
-## Batch Statements – Executing Multiple Operations Together
+### دستورات دسته‌ای چیست؟  
+دستورات دسته‌ای به شما امکان می‌دهند چندین عملیات `INSERT`، `UPDATE` یا `DELETE` را به‌صورت یک واحد منطقی اجرا کنید. این دستورات برای گروه‌بندی عملیات نوشتاری مرتبط، به‌ویژه زمانی که روی یک کلید پارتیشن یکسان اعمال می‌شوند، مفید هستند.
 
-### What Are Batch Statements?
+### انواع دسته‌ها  
+- **دسته ثبت‌شده (Logged Batch)**: تضمین اتمیک بودن (همه عملیات با هم موفق یا ناموفق می‌شوند) را دارد، اما به دلیل سربار هماهنگی کندتر است. برای عملیات‌هایی که نیاز به سازگاری دارند استفاده کنید.  
+- **دسته ثبت‌نشده (Unlogged Batch)**: سریع‌تر است زیرا مرحله هماهنگی را نادیده می‌گیرد، اما اتمیک بودن را تضمین نمی‌کند. برای عملیات‌های حساس به عملکرد مناسب است.  
+- **دسته شمارشگر (Counter Batch)**: مخصوص جداول با ستون‌های شمارشگر، برای به‌روزرسانی اتمیک شمارشگرها استفاده می‌شود.
 
-Batch statements allow you to execute multiple `INSERT`, `UPDATE`, or `DELETE` operations as a single logical unit. They are useful for grouping related write operations, especially when they target the same partition key.
-
-### Types of Batches
-
-- **Logged Batch**: Ensures atomicity (all operations succeed or fail together) but is slower due to coordination overhead. Use for operations requiring consistency.
-- **Unlogged Batch**: Faster, as it skips the coordination step, but does not guarantee atomicity. Ideal for performance-critical operations.
-- **Counter Batch**: Specifically for tables with counter columns, used to update counters atomically.
-
-### Example: Social Media Application
-
-Imagine a social media app where a user posts a status update, and we need to update both the user’s profile and their timeline simultaneously.
+### مثال: اپلیکیشن شبکه اجتماعی  
+تصور کنید در یک اپلیکیشن شبکه اجتماعی، کاربر یک به‌روزرسانی وضعیت ارسال می‌کند و ما باید همزمان پروفایل کاربر و جدول زمانی او را به‌روزرسانی کنیم.
 
 ```sql
 BEGIN UNLOGGED BATCH
   INSERT INTO posts (user_id, post_id, content, created_at) 
-  VALUES (1, uuid(), 'Hello, world!', '2025-08-05T12:00:00');
+  VALUES (1, uuid(), 'سلام دنیا!', '2025-08-05T12:00:00');
   UPDATE users SET post_count = post_count + 1 WHERE user_id = 1;
 APPLY BATCH;
 ```
 
-### Best Practices
+### بهترین روش‌ها  
+- **استفاده برای کلید پارتیشن یکسان**: دسته‌ها زمانی کارآمد هستند که عملیات‌ها روی یک کلید پارتیشن یکسان انجام شوند تا از اضافه‌بار روی گره هماهنگ‌کننده جلوگیری شود.  
+- **اجتناب از دسته‌های بزرگ**: دسته‌های بزرگ می‌توانند به خوشه فشار وارد کنند. تعداد عملیات‌ها را محدود کنید (مثلاً کمتر از 10).  
+- **انتخاب دسته ثبت‌نشده برای عملکرد**: از دسته‌های ثبت‌نشده استفاده کنید مگر اینکه اتمیک بودن ضروری باشد.
 
-- **Use for Same Partition Key**: Batches are most efficient when operations target the same partition key to avoid overloading the coordinator node.
-- **Avoid Large Batches**: Large batches can strain the cluster. Limit to a few operations (e.g., &lt;10).
-- **Choose Unlogged for Performance**: Use unlogged batches unless atomicity is critical.
-
-### Common Mistake
-
-Using a batch for operations across different partition keys can overload the coordinator node, leading to performance degradation. For example:
-
+### اشتباه رایج  
+استفاده از دسته برای عملیات‌هایی که روی کلیدهای پارتیشن مختلف انجام می‌شوند می‌تواند گره هماهنگ‌کننده را تحت فشار قرار دهد و عملکرد را کاهش دهد. به عنوان مثال:  
 ```sql
 BEGIN BATCH
-  INSERT INTO posts (user_id, post_id, content) VALUES (1, uuid(), 'Post 1');
-  INSERT INTO posts (user_id, post_id, content) VALUES (2, uuid(), 'Post 2');
+  INSERT INTO posts (user_id, post_id, content) VALUES (1, uuid(), 'پست 1');
+  INSERT INTO posts (user_id, post_id, content) VALUES (2, uuid(), 'پست 2');
 APPLY BATCH;
-```
+```  
+این کار به دلیل پوشش چندین پارتیشن ناکارآمد است. در عوض، این عملیات‌ها را به‌صورت جداگانه اجرا کنید.
 
-This is inefficient as it spans multiple partitions. Instead, execute these as separate statements.
+## تراکنش‌های سبک (LWT) – عملیات شرطی
 
-## Lightweight Transactions (LWT) – Conditional Operations
+### تراکنش‌های سبک چیست؟  
+تراکنش‌های سبک (LWT) امکان انجام عملیات شرطی را فراهم می‌کنند، به‌طوری که تغییرات تنها در صورتی اعمال می‌شوند که شرط خاصی برقرار باشد (مثلاً "مقایسه و تنظیم"). این تراکنش‌ها از پروتکل Paxos برای سازگاری استفاده می‌کنند، بنابراین کندتر هستند اما اتمیک و خطی‌سازی‌پذیر هستند.
 
-### What Are Lightweight Transactions?
-
-LWTs allow conditional operations, ensuring changes are applied only if a specific condition is met (e.g., "compare and set"). They use the Paxos protocol for consistency, making them slower but atomic and linearizable.
-
-### Example: Preventing Duplicate Usernames
-
-In our social media app, we want to ensure usernames are unique during registration.
+### مثال: جلوگیری از نام‌های کاربری تکراری  
+در اپلیکیشن شبکه اجتماعی خود، می‌خواهیم اطمینان حاصل کنیم که نام‌های کاربری در هنگام ثبت‌نام یکتا باشند.
 
 ```sql
 INSERT INTO users (user_id, username, email) 
@@ -72,17 +64,15 @@ VALUES (1, 'ali123', 'ali@example.com')
 IF NOT EXISTS;
 ```
 
-If a user with `user_id = 1` already exists, the operation fails, and the result might look like:
-
+اگر کاربری با `user_id = 1` از قبل وجود داشته باشد، عملیات ناموفق خواهد بود و نتیجه ممکن است به این صورت باشد:  
 ```
 [applied] | user_id | username | email
 ----------|---------|----------|----------------
  false    | 1       | ali123   | ali@example.com
 ```
 
-### Example: Conditional Update
-
-Suppose we only want to update a user’s profile if their email hasn’t changed.
+### مثال: به‌روزرسانی شرطی  
+فرض کنید می‌خواهیم پروفایل کاربر را تنها در صورتی به‌روزرسانی کنیم که ایمیل او تغییر نکرده باشد.
 
 ```sql
 UPDATE users 
@@ -91,38 +81,33 @@ WHERE user_id = 1
 IF email = 'ali@example.com';
 ```
 
-If the email doesn’t match, the update fails:
-
+اگر ایمیل مطابقت نداشته باشد، به‌روزرسانی ناموفق خواهد بود:  
 ```
 [applied] | email
 ----------|----------------
  false    | wrong@email.com
 ```
 
-### Key Characteristics
+### ویژگی‌های کلیدی  
+| ویژگی | نوشتن معمولی | LWT |  
+|-------|---------------|-----|  
+| **شرط** | ندارد، همیشه اجرا می‌شود | فقط در صورت برقراری شرط اجرا می‌شود |  
+| **اتمیک بودن** | خیر | بله (از پروتکل Paxos استفاده می‌کند) |  
+| **سرعت** | سریع ⚡ | کندتر 🐢 به دلیل هماهنگی |  
+| **مورد استفاده** | به‌روزرسانی‌های ساده | کنترل هم‌زمانی، محدودیت‌های یکتا |  
+| **فشار روی خوشه** | کم | زیاد |
 
-| Feature | Regular Write | LWT |
-| --- | --- | --- |
-| **Condition** | None, always executes | Executes only if condition is met |
-| **Atomicity** | No | Yes (uses Paxos protocol) |
-| **Speed** | Fast ⚡ | Slower 🐢 due to coordination |
-| **Use Case** | Simple updates | Concurrency control, unique constraints |
-| **Cluster Load** | Low | High |
+### چه زمانی از LWT استفاده کنیم؟  
+- **استفاده کنید وقتی**: نیاز به جلوگیری از شرایط رقابتی، اطمینان از یکتایی داده‌ها (مثلاً نام‌های کاربری) یا پیاده‌سازی قفل خوش‌بینانه دارید.  
+- **اجتناب کنید وقتی**: عملکرد اولویت دارد یا شرایط خاصی لازم نیست.
 
-### When to Use LWT
+## نمای مادی‌شده (Materialized Views) – نمای ثانویه از داده‌ها
 
-- **Use When**: Preventing race conditions, ensuring unique data (e.g., usernames), or implementing optimistic locking.
-- **Avoid When**: Performance is critical, or conditions aren’t necessary.
+### نمای مادی‌شده چیست؟  
+نمای مادی‌شده یک جدول ثانویه با کلید اصلی یا ترتیب مرتب‌سازی متفاوت ایجاد می‌کند که به‌طور خودکار از جدول اصلی پر می‌شود. این ابزار برای پشتیبانی از الگوهای کوئری اضافی بدون نیاز به تکثیر دستی داده‌ها مفید است.
 
-## Materialized Views – Secondary Data Representation
-
-### What Are Materialized Views?
-
-Materialized Views create a secondary table with a different primary key or sort order, automatically populated from the base table. They’re useful for supporting additional query patterns without duplicating data manually.
-
-### Example: Querying Users by Email
-
-In our social media app, we want to query users by email instead of `user_id`.
+### مثال: کوئری کاربران بر اساس ایمیل  
+در اپلیکیشن شبکه اجتماعی، می‌خواهیم کاربران را بر اساس ایمیل به جای `user_id` کوئری کنیم.
 
 ```sql
 CREATE MATERIALIZED VIEW users_by_email AS
@@ -132,30 +117,25 @@ CREATE MATERIALIZED VIEW users_by_email AS
   PRIMARY KEY (email, user_id);
 ```
 
-Now, we can query:
-
+حالا می‌توانیم کوئری کنیم:  
 ```sql
 SELECT * FROM users_by_email WHERE email = 'ali@example.com';
 ```
 
-### Warning
+### هشدار  
+در کاساندرا نسخه 4.0 و بالاتر، نمای مادی‌شده به دلیل مشکلات سازگاری منسوخ شده است. جایگزین‌های زیر را در نظر بگیرید:  
+- **نرمال‌سازی معکوس (Denormalization)**: ایجاد جداول جداگانه با کلیدهای اصلی متفاوت.  
+- **ایندکس‌های ثانویه**: برای ستون‌های با کاردینالیتی پایین.  
+- **موتورهای جستجوی خارجی**: استفاده از Elasticsearch یا Solr برای کوئری‌های پیچیده.  
+- **منطق در سطح اپلیکیشن**: ذخیره نتایج کوئری در لایه اپلیکیشن.
 
-In Cassandra 4.0 and later, Materialized Views are deprecated due to consistency issues. Consider alternatives:
+## انواع داده تعریف‌شده توسط کاربر (UDTs) – ساختار داده پیچیده
 
-- **Denormalization**: Create separate tables with different primary keys.
-- **Secondary Indexes**: For low-cardinality columns.
-- **External Search Engines**: Use Elasticsearch or Solr for complex queries.
-- **Application-Level Logic**: Cache query results in the application layer.
+### UDT چیست؟  
+UDTs به شما امکان می‌دهند ساختارهای داده پیچیده (مانند struct) را در یک ستون تعریف کنید و نیاز به ایجاد جداول جداگانه را کاهش دهید.
 
-## User-Defined Types (UDTs) – Complex Data Structures
-
-### What Are UDTs?
-
-UDTs allow you to define complex data structures (like structs) within a single column, reducing the need for separate tables.
-
-### Example: Storing User Addresses
-
-In our social media app, we want to store a user’s address as a structured object.
+### مثال: ذخیره آدرس کاربران  
+در اپلیکیشن شبکه اجتماعی، می‌خواهیم آدرس کاربر را به‌صورت یک شیء ساختاریافته ذخیره کنیم.
 
 ```sql
 CREATE TYPE address (
@@ -171,23 +151,20 @@ CREATE TABLE users (
 );
 
 INSERT INTO users (user_id, username, addr)
-VALUES (1, 'ali123', {street: 'Valiasr', city: 'Tehran', zip: 12345});
+VALUES (1, 'ali123', {street: 'ولیعصر', city: 'تهران', zip: 12345});
 ```
 
-### Best Practices
+### بهترین روش‌ها  
+- از UDT برای داده‌های مرتبط منطقی (مثلاً آدرس‌ها، مختصات) استفاده کنید.  
+- از UDTهای عمیقاً تودرتو اجتناب کنید، زیرا می‌توانند کوئری‌ها را پیچیده کنند.
 
-- Use UDTs for logically related data (e.g., addresses, coordinates).
-- Avoid deeply nested UDTs, as they can complicate queries.
+## توابع و تجمیع‌های تعریف‌شده توسط کاربر (UDFs و Aggregates) – توابع دلخواه
 
-## User-Defined Functions (UDFs) and Aggregates – Custom Functions
+### UDF چیست؟  
+UDFها به شما امکان می‌دهند توابع سفارشی را با استفاده از Java یا JavaScript بنویسید تا قابلیت‌های CQL را گسترش دهید. تجمیع‌ها توابع تجمیعی سفارشی هستند.
 
-### What Are UDFs?
-
-UDFs let you define custom functions in Java or JavaScript to extend CQL’s functionality. Aggregates are custom aggregation functions.
-
-### Example: Checking Even Numbers
-
-In our social media app, we want to check if a user’s post count is even.
+### مثال: بررسی زوج بودن تعداد پست‌ها  
+در اپلیکیشن شبکه اجتماعی، می‌خواهیم بررسی کنیم که آیا تعداد پست‌های کاربر زوج است یا خیر.
 
 ```sql
 CREATE FUNCTION is_even(n int)
@@ -200,9 +177,8 @@ SELECT user_id, post_count, is_even(post_count) AS is_even
 FROM users;
 ```
 
-### Example: String Length
-
-Calculate the length of a username.
+### مثال: محاسبه طول نام کاربری  
+طول نام کاربری را محاسبه کنید.
 
 ```sql
 CREATE FUNCTION string_length(s text)
@@ -215,56 +191,49 @@ SELECT username, string_length(username) AS name_length
 FROM users;
 ```
 
-### Warning
+### هشدار  
+UDFها می‌توانند عملکرد را تحت تأثیر قرار دهند و بهتر است در محیط‌های محلی یا آزمایشی استفاده شوند. در محیط‌های تولیدی با احتیاط استفاده کنید.
 
-UDFs can impact performance and are best used in local or test environments. Avoid in production unless necessary.
+## پشتیبانی از JSON – ورودی/خروجی JSON
 
-## JSON Support – JSON Input/Output
+### پشتیبانی از JSON چیست؟  
+کاساندرا امکان درج و بازیابی داده‌ها به فرمت JSON را فراهم می‌کند و یکپارچگی با اپلیکیشن‌های مدرن را ساده‌تر می‌کند.
 
-### What Is JSON Support?
-
-Cassandra allows inserting and retrieving data in JSON format, simplifying integration with modern applications.
-
-### Example: Inserting a Post
-
-In our social media app, insert a post using JSON.
+### مثال: درج یک پست  
+در اپلیکیشن شبکه اجتماعی، یک پست را با استفاده از JSON درج کنید.
 
 ```sql
 INSERT INTO posts JSON 
-'{"user_id": 2, "post_id": "uuid()", "content": "Loving Cassandra!", "created_at": "2025-08-05T12:00:00"}';
+'{"user_id": 2, "post_id": "uuid()", "content": "عاشق کاساندرا هستم!", "created_at": "2025-08-05T12:00:00"}';
 ```
 
-### Example: Retrieving as JSON
-
-Fetch a user’s data as JSON.
+### مثال: بازیابی به‌صورت JSON  
+داده‌های کاربر را به‌صورت JSON بازیابی کنید.
 
 ```sql
 SELECT JSON user_id, username, email FROM users WHERE user_id = 1;
 ```
 
-### Best Practices
+### بهترین روش‌ها  
+- از JSON برای نمونه‌سازی سریع یا هنگام یکپارچگی با APIهای مبتنی بر JSON استفاده کنید.  
+- برای کوئری‌های با عملکرد بالا از JSON اجتناب کنید، زیرا تجزیه JSON سربار ایجاد می‌کند.
 
-- Use JSON for quick prototyping or when integrating with JSON-based APIs.
-- Avoid for high-performance queries, as JSON parsing adds overhead.
+## بهترین روش‌ها و اشتباهات رایج
 
-## Best Practices and Common Pitfalls
+### بهترین روش‌ها  
+- **استفاده هوشمندانه از دسته‌ها** 📦: از دسته‌های ثبت‌نشده برای عملکرد بهتر استفاده کنید و به عملیات‌های یک پارتیشن محدود کنید.  
+- **استفاده محدود از LWT** 🔒: برای سناریوهایی که نیاز به کنترل هم‌زمانی یا یکتایی دارند رزرو کنید.  
+- **اجتناب از استفاده بیش از حد از نمای مادی‌شده** 📊: برای کوئری‌های پیچیده، نرمال‌سازی معکوس یا موتورهای جستجوی خارجی را در نظر بگیرید.  
+- **استفاده از UDT برای ساختار** 🛠️: از UDT برای مدل‌سازی داده‌های مرتبط و پیچیده استفاده کنید.  
+- **آزمایش UDF در محیط محلی** 🧪: UDFها را با احتیاط به کار ببرید، زیرا می‌توانند عملکرد را تحت تأثیر قرار دهند.  
+- **اعتبارسنجی داده‌های JSON** 📜: مطمئن شوید ورودی‌های JSON با ساختار جدول مطابقت دارند تا از خطاها جلوگیری شود.
 
-### Best Practices
+### اشتباهات رایج  
+- **اضافه‌بار با دسته‌ها** ⚠️: از دسته‌ها برای پارتیشن‌های متعدد استفاده نکنید.  
+- **استفاده بیش از حد از LWT** 🚨: برای به‌روزرسانی‌های ساده از LWT استفاده نکنید، زیرا منابع زیادی مصرف می‌کند.  
+- **نادیده گرفتن محدودیت‌های نمای مادی‌شده** 🚫: به مشکلات سازگاری در نسخه‌های جدید کاساندرا توجه کنید.  
+- **UDFهای پیچیده در محیط تولیدی** 🛑: UDFها می‌توانند عملکرد را کاهش دهند؛ به‌طور کامل آزمایش کنید.
 
-- **Batch Wisely** 📦: Use unlogged batches for performance and limit to same-partition operations.
-- **Use LWT Sparingly** 🔒: Reserve for scenarios requiring concurrency control or uniqueness.
-- **Avoid Overusing Materialized Views** 📊: Consider denormalization or external search engines for complex queries.
-- **Leverage UDTs for Structure** 🛠️: Use UDTs to model complex but related data.
-- **Test UDFs Locally** 🧪: Deploy UDFs cautiously due to performance implications.
-- **Validate JSON Data** 📜: Ensure JSON inputs match the table schema to avoid errors.
+## نتیجه‌گیری  
+امروز ویژگی‌های پیشرفته CQL را بررسی کردیم که آپاچی کاساندرا را به ابزاری قدرتمند برای ساخت اپلیکیشن‌های مقیاس‌پذیر و بلادرنگ تبدیل می‌کنند. با درک دستورات `BATCH`، تراکنش‌های سبک، نمای مادی‌شده، UDTها، UDFها و پشتیبانی از JSON، شما آماده هستید تا موارد استفاده پیچیده را در اپلیکیشن شبکه اجتماعی یا هر پروژه دیگری که با کاساندرا کار می‌کند مدیریت کنید. همیشه تعادل بین عملکرد و سازگاری را حفظ کنید و از اشتباهات رایج اجتناب کنید تا خوشه شما به‌خوبی کار کند. 🚀
 
-### Common Pitfalls
-
-- **Overloading with Batches** ⚠️: Avoid batches across multiple partitions.
-- **Overusing LWT** 🚨: Don’t use LWT for simple updates, as it’s resource-intensive.
-- **Ignoring Materialized View Limitations** 🚫: Be aware of consistency issues in newer Cassandra versions.
-- **Complex UDFs in Production** 🛑: UDFs can degrade performance; test thoroughly.
-
-## Conclusion
-
-Today, we explored advanced CQL features that make Apache Cassandra a powerful tool for building scalable, real-time applications. By understanding `BATCH` statements, Lightweight Transactions, Materialized Views, UDTs, UDFs, and JSON support, you’re equipped to handle complex use cases in your social media app or any other Cassandra-powered project. Always balance performance and consistency, and avoid common pitfalls to keep your cluster running smoothly. 🚀
