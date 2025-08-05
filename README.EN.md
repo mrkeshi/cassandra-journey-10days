@@ -9,19 +9,19 @@ This repository contains structured notes and practical guides from my learning 
 
 ## Table of Contents
 
+| Day | Title                      | Link                                                             |
+|-----|----------------------------|------------------------------------------------------------------|
+| 01  | Introduction to Cassandra  | [📄 day01-introduction.md](./docs/en/day01-introduction.md)       |
+| 02  | Installing Cassandra       | [📄 day02-installation.md](./docs/en/day02-installation.md)       |
+| 03  | Getting Started with CQL   | [📄 day03-cql-basics.md](./docs/en/day03-cql-basics.md)           |
+| 04  | Data Modeling Basics       | [📄 day04-data-modeling.md](./docs/en/day04-data-modeling.md)     |
+| 05  | Using Collections (List, Set, Map) | [📄 day05-collections.md](./docs/en/day05-collections.md)  |
+| 06  | TTL, Indexes, and Functions| [📄 day06-ttl-index-functions.md](./docs/en/day06-ttl-index-functions.md) |
+| 07  | Query-Driven Data Modeling | [📄 day07-query-modeling.md](./docs/en/day07-query-modeling.md)   |
+| 08  | Advanced CQL Features      | [📄 day08-advanced-cql.md](./docs/en/day08-advanced-cql.md)       |
+| 09  | Mini Project – Build a Simple App | [📄 day09-mini-project.md](./docs/en/day09-mini-project.md)  |
+| 10  | Backup and Recovery        | [📄 day10-backup-and-recovery.md](./docs/en/day10-backup-and-recovery.md) |
 
-| Day | Title | Link |
-|-----|-------|------|
-| 01 | Introduction to Cassandra | [day01-introduction.md](./docs/en/day01-introduction.md) |
-| 02 | Installing Cassandra | [day02-installation.md](./docs/en/day02-installation.md) |
-| 03 | Getting Started with CQL | [day03-cql-basics.md](./docs/en/day03-cql-basics.md) |
-| 04 | Fundamentals of Data Modeling | [day04-data-modeling.md](./docs/en/day04-data-modeling.md) |
-| 05 | Using Collections (List, Set, Map) | [day05-collections.md](./docs/en/day05-collections.md) |
-| 06 | TTL, Indexes, and Functions | [day06-ttl-index-functions.md](./docs/en/day06-ttl-index-functions.md) |
-| 07 | Query-Based Data Modeling | [day07-query-modeling.md](./docs/en/day07-query-modeling.md) |
-| 08 | Advanced CQL Features | [day08-advanced-cql.md](./docs/en/day08-advanced-cql.md) |
-| 09 | Mini Project – Building a Simple App | [day09-mini-project.md](./docs/en/day09-mini-project.md) |
-| 10 | Architecture, Replication & Consistency | [day10-architecture-and-replication.md](./docs/en/day10-architecture-and-replication.md) |
 
 
 ---

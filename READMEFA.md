@@ -11,18 +11,19 @@
 
 ## 📌 فهرست مطالب
 
-| روز | عنوان | لینک |
-|-----|-------|------|
-| ۰۱ | مقدمه‌ای بر کاساندرا | [📄 day01-introduction.md](./docs/fa/day01-introduction.md) |
-| ۰۲ | نصب کاساندرا | [📄 day02-installation.md](./docs/fa/day02-installation.md) |
-| ۰۳ | شروع کار با CQL | [📄 day03-cql-basics.md](./docs/fa/day03-cql-basics.md) |
-| ۰۴ | اصول مدل‌سازی داده | [📄 day04-data-modeling.md](./docs/fa/day04-data-modeling.md) |
-| ۰۵ | استفاده از کالکشن‌ها (لیست، مجموعه، نقشه) | [📄 day05-collections.md](./docs/fa/day05-collections.md) |
-| ۰۶ | TTL، ایندکس‌ها و توابع | [📄 day06-ttl-index-functions.md](./docs/fa/day06-ttl-index-functions.md) |
-| ۰۷ | مدل‌سازی داده مبتنی بر کوئری | [📄 day07-query-modeling.md](./docs/fa/day07-query-modeling.md) |
-| ۰۸ | ویژگی‌های پیشرفته CQL | [📄 day08-advanced-cql.md](./docs/fa/day08-advanced-cql.md) |
-| ۰۹ | پروژه کوچک – ساخت یک اپ ساده | [📄 day09-mini-project.md](./docs/fa/day09-mini-project.md) |
-| ۱۰ | معماری، تکثیر و سازگاری داده | [📄 day10-architecture-and-replication.md](./docs/fa/day10-architecture-and-replication.md) |
+| روز | عنوان                          | لینک                                                             |
+|-----|-------------------------------|------------------------------------------------------------------|
+| ۰۱  | مقدمه‌ای بر کاساندرا          | [📄 day01-introduction.md](./docs/fa/day01-introduction.md)       |
+| ۰۲  | نصب کاساندرا                  | [📄 day02-installation.md](./docs/fa/day02-installation.md)       |
+| ۰۳  | شروع کار با CQL               | [📄 day03-cql-basics.md](./docs/fa/day03-cql-basics.md)           |
+| ۰۴  | اصول مدل‌سازی داده            | [📄 day04-data-modeling.md](./docs/fa/day04-data-modeling.md)     |
+| ۰۵  | استفاده از کالکشن‌ها (لیست، مجموعه، نقشه) | [📄 day05-collections.md](./docs/fa/day05-collections.md)  |
+| ۰۶  | TTL، ایندکس‌ها و توابع        | [📄 day06-ttl-index-functions.md](./docs/fa/day06-ttl-index-functions.md) |
+| ۰۷  | مدل‌سازی داده مبتنی بر کوئری | [📄 day07-query-modeling.md](./docs/fa/day07-query-modeling.md)   |
+| ۰۸  | ویژگی‌های پیشرفته CQL         | [📄 day08-advanced-cql.md](./docs/fa/day08-advanced-cql.md)       |
+| ۰۹  | پروژه کوچک – ساخت یک اپ ساده | [📄 day09-mini-project.md](./docs/fa/day09-mini-project.md)       |
+| ۱۰  | بکاپ و بازیابی داده‌ها        | [📄 day10-backup-and-recovery.md](./docs/fa/day10-backup-and-recovery.md) |
+
 
 ---
 
